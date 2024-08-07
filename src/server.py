@@ -100,7 +100,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 
     def _parse_path(self) -> tuple[str, str]:
         """
-        Function that parses path from request.
+        Function that parses path from request and retrieves parameter value.
         :return: Tuple containing path and parameter.
         """
         param = self.path.rstrip('/').split('/')[-1].replace('%20', ' ').lower()
@@ -109,10 +109,10 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 
     def _set_response_type(self) -> bool:
         """
-        Function that checks wht type of response should be sent.
+        Function that checks what type of response should be sent.
         If JSON is requested, it returns False, if CSV is requested, it returns True.
-        If both JSON and CSV are requested, JSON is returned.
-        If no header is present, JSON is returned.
+        If both JSON and CSV are requested, JSON is selected.
+        If no header is present, JSON is selected.
         :return: True if only CSV is requested, False otherwise.
         """
         header_accept_info = self.headers.get('Accept')
