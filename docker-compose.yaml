@@ -1,0 +1,7 @@
+version: "3.12"
+services:
+  countries-api:
+    image: countries-api
+    build: .
+    ports:
+      - 80:80
