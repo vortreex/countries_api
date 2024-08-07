@@ -34,7 +34,7 @@ Here are the endpoints it supports:
   - **/all_countries_in_subregion/{region}** - responds with list of all the countries of a determined subregion (South America, West Europe,  Eastern Asia, etc) that has borders with more than 3 countries. When sending request {subregion} should be substituted with the name of the subregion we want to have information about.
  - **/population_of_subregion/{subregion}** - responds with list of all the countries of a determined subregion (South America, West Europe,  Eastern Asia, etc) and attaches information about total population of subregion to information about each country (for convenience of CSV format). When sending request {subregion} should be substituted with the name of the subregion we want to have information about.
 
-The server supports response represented in two formats: **JSON** and **CSV**!
+The server supports response represented in two formats: **JSON** and **CSV** and format can specified with information in header!
 
 You can retrieve information from given endpoints with different tools. Here are the examples of using cURL python library 'requests'.
 
