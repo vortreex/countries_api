@@ -41,7 +41,7 @@ def _sanitize_data(data: list) -> list:
     return data
 
 @lru_cache(maxsize=_CACHE_CAPACITY)
-def send_region_request(region: str):
+def send_region_request(region: str) -> list:
     """
     Function that sends REST API request to remote host in order
     to retrieve data about countries in specified region and caches it.
@@ -52,7 +52,7 @@ def send_region_request(region: str):
     return _sanitize_data(data)
 
 @lru_cache(maxsize=_CACHE_CAPACITY)
-def send_subregion_request(subregion: str):
+def send_subregion_request(subregion: str) -> list:
     """
     Function that sends REST API request to remote host in order
     to retrieve data about countries in specified subregion and caches it.

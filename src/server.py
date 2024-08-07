@@ -5,8 +5,8 @@ This module contains definition of class representing server for Countries API.
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 from requests import HTTPError
-from csv_converter import convert_json_to_csv
-from data_consumer import send_region_request, send_subregion_request
+from src.csv_converter import convert_json_to_csv
+from src.data_consumer import send_region_request, send_subregion_request
 
 _MINIMAL_NEIGHBOURS_NUMBER = 3
 _BIGGEST_COUNTRIES_IN_REGION_LIMIT = 10
@@ -22,7 +22,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
     """
     Class representing handler for server for Countries API.
     """
-    def do_GET(self):
+    def do_GET(self) -> None:
         """
         Function that handles HTTP GET requests received by the server.
         """
@@ -44,7 +44,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
                 self._send_response(message=_RESOURCE_NOT_FOUND_MSG,
                                     status_code=_RESOURCE_NOT_FOUND_STATUS_CODE)
 
-    def _ten_biggest_countries_by_region(self, region: str = None, csv_output: bool = False):
+    def _ten_biggest_countries_by_region(self, region: str = None, csv_output: bool = False) -> None:
         """
         Function that handles endpoint /top_ten_countries/{region}
         :param region: Region name
@@ -62,7 +62,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 
         self._send_response(message=data, status_code=_OK_STATUS_CODE)
 
-    def _all_countries_in_subregion(self, subregion: str = None, csv_output: bool = False):
+    def _all_countries_in_subregion(self, subregion: str = None, csv_output: bool = False) -> None:
         """
         Function that handles endpoint /all_countries_in_subregion/{region}
         :param subregion: Subregion name
@@ -79,7 +79,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 
         self._send_response(message=data, status_code=_OK_STATUS_CODE)
 
-    def _population_of_subregion(self, subregion: str = None, csv_output: bool = False):
+    def _population_of_subregion(self, subregion: str = None, csv_output: bool = False) -> None:
         """
         Function that handles endpoint /population_of_subregion/{subregion}
         :param subregion: Subregion name
@@ -97,7 +97,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 
         self._send_response(message=data, status_code=_OK_STATUS_CODE)
 
-    def _parse_path(self):
+    def _parse_path(self) -> tuple[str, str]:
         """
         Function that parses path from request.
         :return: Tuple containing path and parameter.
@@ -106,7 +106,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
         path = '/'.join(self.path.rstrip('/').split('/')[:-1])
         return path, param
 
-    def _set_response_type(self):
+    def _set_response_type(self) -> bool:
         """
         Function that checks wht type of response should be sent.
         If JSON is requested, it returns False, if CSV is requested, it returns True.
@@ -123,7 +123,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 
         raise ValueError('Accept header must contain either "json" or "csv"')
 
-    def _convert_data_to_requested_type(self, data: dict | list, csv_output: bool):
+    def _convert_data_to_requested_type(self, data: dict | list, csv_output: bool) -> str | list:
         """
         Function that converts data to requested type.
         :param data: Data to be converted.
@@ -135,7 +135,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 
         return json.dumps(data)
 
-    def _send_response(self, message: str, status_code: int):
+    def _send_response(self, message: str, status_code: int) -> None:
         """
         Function that sends response to client.
         :param message: Message to be sent.
