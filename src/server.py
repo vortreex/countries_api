@@ -151,4 +151,3 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     httpd = HTTPServer(('127.0.0.1', 2137), CountriesAPIHandler)
     httpd.serve_forever()
-    httpd.serve
