@@ -131,7 +131,7 @@ class CountriesAPIServer(BaseHTTPRequestHandler):
         """
         if csv_output:
             return convert_json_to_csv(data=data)
-        
+
         return json.dumps(data)
 
     def _send_response(self, message: str, status_code: int):
