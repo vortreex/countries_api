@@ -1,11 +1,14 @@
+"""
+This module contains function for retreiwing data from remote API host.
+"""
 from functools import lru_cache
-import logging
 import requests
 
 _REQUEST_TIMEOUT = 10
-_REQUEST_REFRESH_LIMIT = 5
+_CACHE_CAPACITY = 5
 _COUNTRIES_API_HOST = 'https://restcountries.com/v3.1'
-_COUNTRY_PARAMS = {'fields': ['name' ,'capital', 'region', 'subregion', 'population', 'area', 'borders']}
+_COUNTRY_PARAMS = {'fields': ['name' ,'capital', 'region', 'subregion',
+                              'population', 'area', 'borders']}
 
 
 def _send_request(host: str = _COUNTRIES_API_HOST) -> dict | list:
@@ -14,14 +17,11 @@ def _send_request(host: str = _COUNTRIES_API_HOST) -> dict | list:
     :param: Remote API Host URL
     :return: JSON like object (dictionary or list) containing retrieved data.
     """
-    try:
-        response = requests.get(url=host, timeout=_REQUEST_TIMEOUT, params=_COUNTRY_PARAMS)
-        response.raise_for_status()
-        data = response.json()
-        return data
-    except requests.HTTPError as err:
-        print('Error')
-        raise err  
+
+    response = requests.get(url=host, timeout=_REQUEST_TIMEOUT, params=_COUNTRY_PARAMS)
+    response.raise_for_status()
+    data = response.json()
+    return data
 
 def _sanitize_data(data: list) -> list:
     """
@@ -40,12 +40,24 @@ def _sanitize_data(data: list) -> list:
 
     return data
 
-@lru_cache(maxsize=_REQUEST_REFRESH_LIMIT)
+@lru_cache(maxsize=_CACHE_CAPACITY)
 def send_region_request(region: str):
+    """
+    Function that sends REST API request to remote host in order
+    to retrieve data about countries in specified region and caches it.
+    :param region: Region name
+    :return : List of dictionaries containing information about countries in region
+    """
     data = _send_request(host=f'{_COUNTRIES_API_HOST}/region/{region}')
     return _sanitize_data(data)
 
-@lru_cache(maxsize=_REQUEST_REFRESH_LIMIT)
+@lru_cache(maxsize=_CACHE_CAPACITY)
 def send_subregion_request(subregion: str):
+    """
+    Function that sends REST API request to remote host in order
+    to retrieve data about countries in specified subregion and caches it.
+    :param region: Region name
+    :return : List of dictionaries containing information about countries in subregion
+    """
     data = _send_request(host=f'{_COUNTRIES_API_HOST}/subregion/{subregion}')
     return _sanitize_data(data)
