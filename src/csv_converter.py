@@ -11,8 +11,7 @@ _MISSING_VAL = "-"
 def convert_json_to_csv(data: dict | list) -> str:
     """
     Function that converts JSON-like object to CSV file.
-    :param data: JSON-like object to be converted
-    :param filename: Name of the file to be created
+    :param data: JSON-like object to be converted.
     """
 
     if isinstance(data, dict):
