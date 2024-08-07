@@ -1,5 +1,5 @@
 """
-This module contains function for retreiwing data from remote API host.
+This module contains function for retrieving data from remote API host.
 """
 from functools import lru_cache
 import requests
