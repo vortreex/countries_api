@@ -14,6 +14,8 @@ def convert_json_to_csv(data: dict | list) -> str:
     :param data: JSON-like object to be converted
     :param filename: Name of the file to be created
     """
+    print(type(data))
+
     if isinstance(data, dict):
         data = [data]
 
