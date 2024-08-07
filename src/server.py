@@ -1,5 +1,5 @@
 """
-This module contains definition of class representing server for Countries API.
+This module contains definition of class of the HTTP server handler.
 """
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
