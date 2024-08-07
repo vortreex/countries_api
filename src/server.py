@@ -115,7 +115,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
         :return: True if only CSV is requested, False otherwise.
         """
         header_accept_info = self.headers.get('Accept')
-        if 'json' in header_accept_info or not header_accept_info == '/*/':
+        if 'json' in header_accept_info or header_accept_info == '/*/':
             return False
 
         if 'csv' in header_accept_info:
