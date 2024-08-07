@@ -17,6 +17,7 @@ _COUNTRY_SIZE_DEF = 'population'  # can be changed to 'area' for example
 _REMOTE_HOST_ERROR_MSG = 'Error retrieving information about contries from remote host'
 _RESOURCE_NOT_FOUND_MSG = 'Endpoint not found!'
 _BAD_HEADER_TYPE_MSG = 'Accept header must contain either "json" or "csv"'
+_EMPTY_HEADERS = ('/*/', '*/*', '')
 
 class CountriesAPIHandler(BaseHTTPRequestHandler):
     """
@@ -115,7 +116,8 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
         :return: True if only CSV is requested, False otherwise.
         """
         header_accept_info = self.headers.get('Accept')
-        if 'json' in header_accept_info or header_accept_info == '/*/':
+        print(header_accept_info)
+        if 'json' in header_accept_info or header_accept_info in _EMPTY_HEADERS:
             return False
 
         if 'csv' in header_accept_info:
@@ -149,3 +151,4 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     httpd = HTTPServer(('127.0.0.1', 2137), CountriesAPIHandler)
     httpd.serve_forever()
+    httpd.serve
