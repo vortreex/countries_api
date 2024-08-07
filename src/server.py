@@ -18,9 +18,9 @@ _REMOTE_HOST_ERROR_MSG = 'Error retrieving information about contries from remot
 _RESOURCE_NOT_FOUND_MSG = 'Endpoint not found!'
 _BAD_HEADER_TYPE_MSG = 'Accept header must contain either "json" or "csv"'
 
-class CountriesAPIServer(BaseHTTPRequestHandler):
+class CountriesAPIHandler(BaseHTTPRequestHandler):
     """
-    Class representing server for Countries API.
+    Class representing handler for server for Countries API.
     """
     def do_GET(self):
         """
@@ -111,10 +111,11 @@ class CountriesAPIServer(BaseHTTPRequestHandler):
         Function that checks wht type of response should be sent.
         If JSON is requested, it returns False, if CSV is requested, it returns True.
         If both JSON and CSV are requested, JSON is returned.
+        If no header is present, JSON is returned.
         :return: True if only CSV is requested, False otherwise.
         """
         header_accept_info = self.headers.get('Accept')
-        if 'json' in header_accept_info:
+        if 'json' in header_accept_info or not header_accept_info == '/*/':
             return False
 
         if 'csv' in header_accept_info:
@@ -146,5 +147,5 @@ class CountriesAPIServer(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    httpd = HTTPServer(('127.0.0.1', 2137), CountriesAPIServer)
+    httpd = HTTPServer(('127.0.0.1', 2137), CountriesAPIHandler)
     httpd.serve_forever()
