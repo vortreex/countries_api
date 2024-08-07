@@ -11,7 +11,7 @@ _SERVER_LOCAL_IP_ADDR = '127.0.0.5'
 _SERVER_LOCAL_PORT_NUMBER = 5005
 
 @pytest.fixture(scope='module')
-def server():
+def api_server():
     """
     Fixture that starts server before tests and stops it after tests.
     """
@@ -26,7 +26,7 @@ def server():
     # Stop server
     server_process.terminate()
 
-def test_top_ten_countries_endpoint_json_header(server) -> None:
+def test_top_ten_countries_endpoint_json_header(api_server) -> None:
     """
     Test checks if server returns correct response for /top_ten_countries endpoint with JSON in header.
     """
@@ -37,7 +37,7 @@ def test_top_ten_countries_endpoint_json_header(server) -> None:
 
     assert len(content) == 10
 
-def test_top_ten_countries_endpoint_csv_header(server) -> None:
+def test_top_ten_countries_endpoint_csv_header(api_server) -> None:
     """
     Test checks if server returns correct response for /top_ten_countries endpoint with JSON in header.
     """
@@ -49,7 +49,7 @@ def test_top_ten_countries_endpoint_csv_header(server) -> None:
         content = response.text.rstrip('\n')
     assert len(content.split('\n')) == 11 # 10 countries + header
 
-def test_faulty_endpoint(server) -> None:
+def test_faulty_endpoint(api_server) -> None:
     """
     Test checks if server returns correct response for non existing endpoint.
     """
@@ -60,7 +60,7 @@ def test_faulty_endpoint(server) -> None:
 
     assert msg.rstrip('\n') == 'Endpoint not found!'
 
-def test_faulty_param(server) -> None:
+def test_faulty_param(api_server) -> None:
     """
     Test checks if server returns correct response for wrong parameter.
     """
@@ -71,7 +71,7 @@ def test_faulty_param(server) -> None:
 
     assert msg.rstrip('\n') == 'Error retrieving information about contries from remote host'
 
-def test_all_countries_in_subregion(server) -> None:
+def test_all_countries_in_subregion(api_server) -> None:
     """
     Test checks if server returns correct response for /all_countries_in_subregion endpoint.
     """
@@ -84,7 +84,7 @@ def test_all_countries_in_subregion(server) -> None:
         assert country['subregion'].lower() == 'western europe'
         assert len(country['borders']) >= 3
 
-def test_population_of_subregion(server) -> None:
+def test_population_of_subregion(api_server) -> None:
     """
     Test checks if server returns correct response for /population_of_subregion endpoint.
     """
@@ -101,7 +101,7 @@ def test_population_of_subregion(server) -> None:
     for country in content:
         assert country['Total subregion population'] == total_population
 
-def test_unsupported_header_type(server) -> None:
+def test_unsupported_header_type(api_server) -> None:
     """
     Test checks if server returns correct response for unsupported header type.
     """
@@ -112,7 +112,7 @@ def test_unsupported_header_type(server) -> None:
 
     assert msg.rstrip('\n') == 'Accept header must contain either "json" or "csv"'
 
-def test_unsupported_put_request(server) -> None:
+def test_unsupported_put_request(api_server) -> None:
     """
     Test checks if server returns correct response for unsupported request type.
     At the moment PUT is not implemented in any way even in errors handling as it is not the part of task.

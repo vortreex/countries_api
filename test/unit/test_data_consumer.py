@@ -35,7 +35,7 @@ def test_send_region_request():
                  {'name': 'Norfolk Island', 'capital': 'Kingston', 'region': 'Oceania', 'subregion': 'Australia and New Zealand', 'borders': [], 'area': 36.0, 'population': 2302},
                  {'name': 'New Zealand', 'capital': 'Wellington', 'region': 'Oceania', 'subregion': 'Australia and New Zealand', 'borders': [], 'area': 270467.0, 'population': 5084300},
                  {'name': 'Micronesia', 'capital': 'Palikir', 'region': 'Oceania', 'subregion': 'Micronesia', 'borders': [], 'area': 702.0, 'population': 115021}]
-    
+
     assert  consumer.send_region_request('Oceania') == mock_data
 
 def test_send_region_request_faulty():
@@ -59,7 +59,7 @@ def test_send_subregion_request():
                  {"name": "Slovenia", "capital": "Ljubljana", "region": "Europe", "subregion": "Central Europe", "borders": ["AUT", "HRV", "ITA", "HUN"], "area": 20273.0, "population": 2100126},
                  {"name": "Austria", "capital": "Vienna", "region": "Europe", "subregion": "Central Europe", "borders": ["CZE", "DEU", "HUN", "ITA", "LIE", "SVK", "SVN", "CHE"], "area": 83871.0, "population": 8917205},
                  {"name": "Czechia", "capital": "Prague", "region": "Europe", "subregion": "Central Europe", "borders": ["AUT", "DEU", "POL", "SVK"], "area": 78865.0, "population": 10698896}]
-    
+
     assert  consumer.send_subregion_request('Central Europe') == mock_data
 
 def test_send_subregion_request_faulty():
@@ -98,7 +98,7 @@ def test__sanitize_data():
     """
 
     sanitized_mock_data = [{"name": "Poland", "capital": "Warsaw", "region": "Europe", "subregion": "Central Europe", "borders": ["BLR", "CZE", "DEU", "LTU", "RUS", "SVK", "UKR"], "area": 312679.0, "population": 37950802}]
-    
+
     raw_mock_data = [{"name":{"common":"Poland","official":"Republic of Poland","nativeName":{"pol":{"official":"Rzeczpospolita Polska","common":"Polska"}}},"capital":["Warsaw"],"region":"Europe","subregion":"Central Europe","borders":["BLR","CZE","DEU","LTU","RUS","SVK","UKR"],"area":312679.0,"population":37950802}]
-    
+
     assert consumer._sanitize_data(raw_mock_data) == sanitized_mock_data
