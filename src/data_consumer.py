@@ -56,7 +56,7 @@ def send_subregion_request(subregion: str) -> list:
     """
     Function that sends REST API request to remote host in order
     to retrieve data about countries in specified subregion and caches it.
-    :param region: Region name
+    :param region: Subregion name
     :return : List of dictionaries containing information about countries in subregion
     """
     data = _send_request(host=f'{_COUNTRIES_API_HOST}/subregion/{subregion}')
