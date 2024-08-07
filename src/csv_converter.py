@@ -12,6 +12,7 @@ def convert_json_to_csv(data: dict | list) -> str:
     """
     Function that converts JSON-like object to CSV file.
     :param data: JSON-like object to be converted.
+    :returns: Data in CSV format as string.
     """
 
     if isinstance(data, dict):
