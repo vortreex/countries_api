@@ -51,7 +51,7 @@ class CountriesAPIHandler(BaseHTTPRequestHandler):
         :param region: Region name
         """
         try:
-            data = data = send_region_request(region=region)
+            data = send_region_request(region=region)
         except HTTPError:
             self._send_response(message=_REMOTE_HOST_ERROR_MSG, status_code=_NOK_STATUS_CODE)
             return
