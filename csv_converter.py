@@ -4,6 +4,9 @@ This module contains function to convert JSON-like objects (dicts and lists) to 
 import io
 import csv
 
+_CSV_DIALECT = "excel"
+_MISSING_VAL = "-"
+
 
 def convert_json_to_csv(data: dict | list) -> str:
     """
@@ -15,7 +18,8 @@ def convert_json_to_csv(data: dict | list) -> str:
         data = [data]
 
     output = io.StringIO()
-    writer = csv.DictWriter(output, fieldnames=data[0].keys(), dialect="excel")
+    writer = csv.DictWriter(output, fieldnames=data[0].keys(), dialect=_CSV_DIALECT,
+                            restval=_MISSING_VAL, extrasaction='ignore')
     writer.writeheader()
     writer.writerows(data)
 
